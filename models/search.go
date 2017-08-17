@@ -16,8 +16,8 @@ type PackageSearchQuery struct {
 func SearchPackages(psq PackageSearchQuery, tx *pop.Connection) (Packages, error) {
 	packages := Packages{}
 	q := tx.Q()
-	authors := Authors{}
 	if len(psq.Authors) > 0 {
+		authors := Authors{}
 		aq := tx.Q()
 		for _, n := range psq.Authors {
 			n = strings.TrimSpace(n)
@@ -48,9 +48,19 @@ func SearchPackages(psq PackageSearchQuery, tx *pop.Connection) (Packages, error
 	}
 
 	for i, p := range packages {
+		authors := Authors{}
+		v, err := p.AuthorIDs.Value()
+		if err != nil {
+			return packages, errors.WithStack(err)
+		}
+		err = tx.Where("authors.id = any(?)", v).All(&authors)
+		if err != nil {
+			return packages, errors.WithStack(err)
+		}
 		p.Authors = authors
+
 		versions := Versions{}
-		v, err := p.VersionIDs.Value()
+		v, err = p.VersionIDs.Value()
 		if err != nil {
 			return packages, errors.WithStack(err)
 		}
