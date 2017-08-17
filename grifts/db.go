@@ -18,7 +18,17 @@ var _ = grift.Namespace("db", func() {
 				return errors.WithStack(err)
 			}
 
-			return testdata.CreateBuffalo(tx)
+			err = testdata.CreateBuffalo(tx)
+			if err != nil {
+				return errors.WithStack(err)
+			}
+
+			err = testdata.CreateVice(tx)
+			if err != nil {
+				return errors.WithStack(err)
+			}
+
+			return nil
 
 		})
 	})
