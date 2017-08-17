@@ -3,3 +3,5 @@ create_table("authors", func(t) {
 	t.Column("name", "string", {})
 	t.Column("email", "string", {"null": true})
 })
+
+add_index("authors", "name", {})

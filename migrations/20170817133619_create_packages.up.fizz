@@ -8,3 +8,8 @@ create_table("packages", func(t) {
 	t.Column("description", "text", {})
 	t.Column("version_ids", "varchar[]", {})
 })
+
+add_index("packages", "version_ids", {})
+add_index("packages", "author_ids", {})
+add_index("packages", "keywords", {})
+add_index("packages", "import_path", {"unique": true})

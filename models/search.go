@@ -20,17 +20,22 @@ func SearchPackages(psq PackageSearchQuery, tx *pop.Connection) (Packages, error
 	if len(psq.Authors) > 0 {
 		aq := tx.Q()
 		for _, n := range psq.Authors {
-			aq = tx.Where("name ilike ?", fmt.Sprintf("%%%s%%", strings.ToLower(n)))
+			n = strings.TrimSpace(n)
+			if n != "" {
+				aq = tx.Where("name ilike ?", fmt.Sprintf("%%%s%%", strings.ToLower(n)))
+			}
 		}
 		err := aq.All(&authors)
 		if err != nil {
 			return packages, errors.WithStack(err)
 		}
-		ids := []string{}
-		for _, a := range authors {
-			ids = append(ids, a.ID.String())
+		if len(authors) > 0 {
+			ids := []string{}
+			for _, a := range authors {
+				ids = append(ids, a.ID.String())
+			}
+			q = q.Where("(packages.author_ids)::uuid[] && ?::uuid[]", fmt.Sprintf("{%s}", strings.Join(ids, ",")))
 		}
-		q = q.Where("(packages.author_ids)::uuid[] && array[?]::uuid[]", strings.Join(ids, ","))
 	}
 
 	if len(psq.Keywords) > 0 {
