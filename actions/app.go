@@ -55,6 +55,7 @@ func App() *buffalo.App {
 		app.Use(T.Middleware())
 
 		app.GET("/", HomeHandler)
+		app.POST("/packages/search", PackagesSearch)
 
 		app.ServeFiles("/assets", packr.NewBox("../public/assets"))
 	}

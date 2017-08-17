@@ -1,0 +1,10 @@
+create_table("packages", func(t) {
+	t.Column("id", "uuid", {"primary": true})
+	t.Column("author_ids", "varchar[]", {})
+	t.Column("import_path", "string", {})
+	t.Column("source_url", "string", {})
+	t.Column("license", "text", {})
+	t.Column("keywords", "varchar[]", {})
+	t.Column("description", "text", {})
+	t.Column("version_ids", "varchar[]", {})
+})

@@ -19,4 +19,5 @@ func init() {
 		log.Fatal(err)
 	}
 	pop.Debug = env == "development"
+	// pop.Debug = true
 }
