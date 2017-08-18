@@ -1,0 +1,32 @@
+<%= partial("packages/form.html") %>
+
+<%= if (len(packages) > 0) { %>
+
+  <ul class="list list-unstyled">
+    <%= for (p) in packages { %>
+    <li>
+      <h2><a href="<%= p.SourceURL %>" target="_blank"><%= p.ImportPath %></a></h2>
+      <h4>Releases</h4>
+      <ul>
+        <%= for (v) in p.Versions { %>
+        <li>
+          <%= v.Tag %> - <%= fmtTime(v.ReleasedOn) %>
+        </li>
+        <% } %>
+      </ul>
+      <h4>Authors</h4>
+      <ul>
+        <%= for (a) in p.Authors { %>
+        <li>
+          <%= a.Name %>
+        </li>
+        <% } %>
+      </ul>
+    </li>
+    <% } %>
+  </ul>
+
+
+<% } else { %>
+<h1>Could not find any results for <%= keywordFmt(psq.Keywords) %></h1>
+<% } %>

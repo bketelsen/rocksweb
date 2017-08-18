@@ -8,6 +8,12 @@ import (
 	"github.com/pkg/errors"
 )
 
+func PackagesIndex(c buffalo.Context) error {
+	psq := models.PackageSearchQuery{}
+	c.Set("psq", psq)
+	return c.Render(200, r.HTML("packages/index.html"))
+}
+
 func PackagesSearch(c buffalo.Context) error {
 	tx := c.Value("tx").(*pop.Connection)
 
@@ -24,6 +30,7 @@ func PackagesSearch(c buffalo.Context) error {
 	responder.Wants("json", func(c buffalo.Context) error {
 		return c.Render(200, r.JSON(&pkgs))
 	}).Wants("html", func(c buffalo.Context) error {
+		c.Set("psq", psq)
 		c.Set("packages", pkgs)
 		return c.Render(200, r.HTML("packages/search.html"))
 	}).Respond(c)

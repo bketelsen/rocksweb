@@ -1,6 +1,9 @@
 package actions
 
 import (
+	"strings"
+	"time"
+
 	"github.com/gobuffalo/buffalo/render"
 	"github.com/gobuffalo/packr"
 )
@@ -16,6 +19,13 @@ func init() {
 		TemplatesBox: packr.NewBox("../templates"),
 
 		// Add template helpers here:
-		Helpers: render.Helpers{},
+		Helpers: render.Helpers{
+			"keywordFmt": func(s []string) string {
+				return strings.Join(s, ", ")
+			},
+			"fmtTime": func(t time.Time) string {
+				return t.Format("January 02, 2006 @ 15:04:05")
+			},
+		},
 	})
 }

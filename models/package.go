@@ -17,7 +17,7 @@ type Package struct {
 	UpdatedAt   time.Time     `json:"updated_at" db:"updated_at"`
 	AuthorIDs   slices.String `json:"author_ids" db:"author_ids"`
 	ImportPath  string        `json:"import_path" db:"import_path"`
-	SourceUrl   string        `json:"source_url" db:"source_url"`
+	SourceURL   string        `json:"source_url" db:"source_url"`
 	License     string        `json:"license" db:"license"`
 	Keywords    slices.String `json:"keywords" db:"keywords"`
 	Description string        `json:"description" db:"description"`
@@ -46,7 +46,7 @@ func (p Packages) String() string {
 func (p *Package) Validate(tx *pop.Connection) (*validate.Errors, error) {
 	return validate.Validate(
 		&validators.StringIsPresent{Field: p.ImportPath, Name: "ImportPath"},
-		&validators.StringIsPresent{Field: p.SourceUrl, Name: "SourceUrl"},
+		&validators.StringIsPresent{Field: p.SourceURL, Name: "SourceUrl"},
 		&validators.StringIsPresent{Field: p.License, Name: "License"},
 		&validators.StringIsPresent{Field: p.Description, Name: "Description"},
 	), nil

@@ -31,7 +31,7 @@ func CreateBuffalo(tx *pop.Connection) error {
 		AuthorIDs:   slices.String{a.ID.String()},
 		VersionIDs:  slices.String{v.ID.String()},
 		ImportPath:  "github.com/gobuffalo/buffalo",
-		SourceUrl:   "https://github.com/gobuffalo/buffalo",
+		SourceURL:   "https://github.com/gobuffalo/buffalo",
 		License:     buffaloLicense,
 		Keywords:    slices.String{"go", "buffalo", "golang", "rails", "gobuffalo", "web", "framework"},
 		Description: buffaloDescription,

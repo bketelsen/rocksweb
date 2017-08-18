@@ -1,0 +1,4 @@
+<%= form_for(psq, {action: packagesSearchPath()}) { %>
+  <%= f.InputTag("Keywords", {name: "Keywords[0]", value: keywordFmt(psq.Keywords)}) %>
+  <button class="btn btn-success">Search</button>
+<% } %>

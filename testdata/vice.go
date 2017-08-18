@@ -31,7 +31,7 @@ func CreateVice(tx *pop.Connection) error {
 		AuthorIDs:   slices.String{a.ID.String()},
 		VersionIDs:  slices.String{v.ID.String()},
 		ImportPath:  "github.com/matryer/vice",
-		SourceUrl:   "https://github.com/matryer/vice",
+		SourceURL:   "https://github.com/matryer/vice",
 		License:     viceLicense,
 		Keywords:    slices.String{"go", "golang", "channels", "beta", "queues", "idiomatic"},
 		Description: viceDescription,
