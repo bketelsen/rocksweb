@@ -4,7 +4,6 @@ import (
 	"github.com/bketelsen/rocksweb/models"
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/x/responder"
-	"github.com/markbates/pop"
 	"github.com/pkg/errors"
 )
 
@@ -15,14 +14,15 @@ func PackagesIndex(c buffalo.Context) error {
 }
 
 func PackagesSearch(c buffalo.Context) error {
-	tx := c.Value("tx").(*pop.Connection)
+	//tx := c.Value("tx").(*pop.Connection)
 
 	psq := models.PackageSearchQuery{}
 	if err := c.Bind(&psq); err != nil {
 		return errors.WithStack(err)
 	}
 
-	pkgs, err := models.SearchPackages(psq, tx)
+	//pkgs, err := models.SearchPackages(psq, tx)
+	pkgs, err := packageDB.GetAll()
 	if err != nil {
 		return errors.WithStack(err)
 	}

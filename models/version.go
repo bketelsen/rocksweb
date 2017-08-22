@@ -2,21 +2,10 @@ package models
 
 import (
 	"encoding/json"
-	"time"
 
-	"github.com/markbates/pop"
 	"github.com/markbates/validate"
 	"github.com/markbates/validate/validators"
-	"github.com/satori/go.uuid"
 )
-
-type Version struct {
-	ID         uuid.UUID `json:"id" db:"id"`
-	CreatedAt  time.Time `json:"created_at" db:"created_at"`
-	UpdatedAt  time.Time `json:"updated_at" db:"updated_at"`
-	Tag        string    `json:"tag" db:"tag"`
-	ReleasedOn time.Time `json:"released_on" db:"released_on"`
-}
 
 // String is not required by pop and may be deleted
 func (v Version) String() string {
@@ -35,7 +24,7 @@ func (v Versions) String() string {
 
 // Validate gets run every time you call a "pop.Validate" method.
 // This method is not required and may be deleted.
-func (v *Version) Validate(tx *pop.Connection) (*validate.Errors, error) {
+func (v *Version) Validate() (*validate.Errors, error) {
 	return validate.Validate(
 		&validators.StringIsPresent{Field: v.Tag, Name: "Tag"},
 		&validators.TimeIsPresent{Field: v.ReleasedOn, Name: "ReleasedOn"},
@@ -44,12 +33,12 @@ func (v *Version) Validate(tx *pop.Connection) (*validate.Errors, error) {
 
 // ValidateSave gets run every time you call "pop.ValidateSave" method.
 // This method is not required and may be deleted.
-func (v *Version) ValidateSave(tx *pop.Connection) (*validate.Errors, error) {
+func (v *Version) ValidateSave() (*validate.Errors, error) {
 	return validate.NewErrors(), nil
 }
 
 // ValidateUpdate gets run every time you call "pop.ValidateUpdate" method.
 // This method is not required and may be deleted.
-func (v *Version) ValidateUpdate(tx *pop.Connection) (*validate.Errors, error) {
+func (v *Version) ValidateUpdate() (*validate.Errors, error) {
 	return validate.NewErrors(), nil
 }

@@ -1,10 +1,9 @@
 package actions
 
 import (
+	"github.com/bketelsen/rocksweb/models"
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/buffalo/middleware"
-
-	"github.com/bketelsen/rocksweb/models"
 
 	"github.com/gobuffalo/envy"
 
@@ -18,6 +17,11 @@ import (
 var ENV = envy.Get("GO_ENV", "development")
 var app *buffalo.App
 var T *i18n.Translator
+
+var packageDB models.PackagesDB
+
+var versionDB models.VersionsDB
+var authorDB models.AuthorsDB
 
 // App is where all routes and middleware for buffalo
 // should be defined. This is the nerve center of your
@@ -45,8 +49,15 @@ func App() *buffalo.App {
 		// Wraps each request in a transaction.
 		//  c.Value("tx").(*pop.PopTransaction)
 		// Remove to disable this.
-		app.Use(middleware.PopTransaction(models.DB))
+		//	app.Use(middleware.PopTransaction(models.DB))
 
+		config := &models.Config{
+			URL:       "",
+			MasterKey: "",
+		}
+		packageDB = models.NewPackageDB("rocksweb", "packages", config)
+		versionDB = models.NewVersionDB("rocksweb", "versions", config)
+		authorDB = models.NewAuthorDB("rocksweb", "authors", config)
 		// Setup and use translations:
 		var err error
 		if T, err = i18n.New(packr.NewBox("../locales"), "en-US"); err != nil {

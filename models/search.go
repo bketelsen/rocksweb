@@ -1,18 +1,11 @@
 package models
 
-import (
-	"fmt"
-	"strings"
-
-	"github.com/markbates/pop"
-	"github.com/pkg/errors"
-)
-
 type PackageSearchQuery struct {
 	Authors  []string `json:"authors"`
 	Keywords []string `json:"keywords"`
 }
 
+/*
 func SearchPackages(psq PackageSearchQuery, tx *pop.Connection) (Packages, error) {
 	packages := Packages{}
 	q := tx.Q()
@@ -74,3 +67,4 @@ func SearchPackages(psq PackageSearchQuery, tx *pop.Connection) (Packages, error
 
 	return packages, nil
 }
+*/
